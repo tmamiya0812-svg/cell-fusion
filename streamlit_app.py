@@ -6,6 +6,7 @@ from PIL import Image
 import random
 import re
 import shutil
+import toml
 from openpyxl import load_workbook
 # === Google Sheets 認証：Streamlit Secrets 使用版（修正版） ===
 import gspread
