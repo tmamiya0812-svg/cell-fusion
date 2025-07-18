@@ -1,1 +1,9 @@
+[server]
+headless = true
+
+[theme]
+base = "light"
+
+[general]
+target = "googleapp/streamlit_app.py"
 
