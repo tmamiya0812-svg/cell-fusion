@@ -7,21 +7,14 @@ import random
 import re
 import shutil
 from openpyxl import load_workbook
-# === Google Sheets 認証：Streamlit Secrets使用版 ===
+# === Google Sheets 認証：Streamlit Secrets 使用版（修正版） ===
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-import streamlit as st
+from google.oauth2.service_account import Credentials
 
 SHEET_ID = "1yQuifGNG8e77ka5HlJariXxgqPffrIviDZKgmS9FGCg"
 
-# secretsから認証情報を取得
-credentials_dict = st.secrets["gcp_service_account"]
-
-# スコープ定義
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-
-# 認証オブジェクト作成
-credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
+scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+credentials = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scope)
 gc = gspread.authorize(credentials)
 sheet = gc.open_by_key(SHEET_ID)
 
