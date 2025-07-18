@@ -3,3 +3,7 @@ pandas
 Pillow
 gspread
 oauth2client
+openpyxl
+google-auth
+numpy
+python-dotenv
