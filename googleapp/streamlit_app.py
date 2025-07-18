@@ -9,15 +9,24 @@ import shutil
 from openpyxl import load_workbook
 # === Google Sheets 認証関連（コードの上の方で）===
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from oauth2client.service_account import Credentials
 
 SHEET_ID = "1yQuifGNG8e77ka5HlJariXxgqPffrIviDZKgmS9FGCg"
-CREDENTIAL_FILE = os.path.join(os.path.dirname(__file__), "credentials.json")
+import json
+import gspread
+from google.oauth2.service_account import Credentials
 
-
+# スコープ定義（これは同じ）
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIAL_FILE, scope)
+
+# secrets に貼ったJSONを使って認証情報を作成
+creds_dict = json.loads(st.secrets["GOOGLE_CREDS"])
+credentials = Credentials.from_service_account_info(creds_dict, scopes=scope)
+
+# 認証して Google Sheets にアクセス
 gc = gspread.authorize(credentials)
+sheet = gc.open_by_key("1yQuifGNG8e77ka5HlJariXxgqPffrIviDZKgmS9FGCg")
+
 sheet = gc.open_by_key(SHEET_ID)
 
 def sheet_to_df(ws_name, cols):
